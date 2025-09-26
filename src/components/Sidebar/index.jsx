@@ -1,14 +1,18 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import * as CourseActions from '../../store/actions/course'
-import { bindActionCreators } from 'redux';
-import * as UiActions from '../../store/actions/ui';
+// import { bindActionCreators } from 'redux';
+// import * as CourseActions from '../../store/actions/course'
+// import * as UiActions from '../../store/actions/ui';
+import { toggleLesson } from '../../store/actions/course';
+import { showMessage } from '../../store/actions/ui';
 
-function Sidebar({ modules, toggleLesson, showMessage }) {
+function Sidebar(props) {
+    const { modules, toggleLesson } = props;
+    console.log("props: ", props)
 
     const handleClick = () => {
-        showMessage({
+        props.showMessage({
             type: 'success',
             message: 'Operação concluída com sucesso!'
         })
@@ -37,11 +41,11 @@ const mapStateToProps = state => ({
     modules: state.course.modules
 })
 
-const mapDispatchToProps = dispatch =>
-    bindActionCreators({
-        ...CourseActions,
-        ...UiActions
-    },
-        dispatch)
+// const mapDispatchToProps = dispatch =>
+//     bindActionCreators({
+//         ...CourseActions,
+//         ...UiActions
+//     },
+//         dispatch)
 
-export default connect(mapStateToProps, mapDispatchToProps)(Sidebar);
+export default connect(mapStateToProps, { showMessage, toggleLesson })(Sidebar);
